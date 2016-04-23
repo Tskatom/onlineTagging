@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+  <head>
+    <title>Event Tagging</title>
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "tagging/css/style.css" %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static "tagging/js/tag.js" %}"></script>
+
+  </head>
+  <body>
+        
+        {% if user.is_authenticated%}
+            <div id="login_info" class="navbar well row" style="width:100%; max-height:60px; margin-top:10px"> 
+            <div class="col-sm-1" style="max-height:60px; margin-top:-20px">
+            <img src="{%static 'tagging/images/power.svg'%}" class="img-rounded" width="60" height="60" style="float:left; margin-bottom:100px">
+            </div>
+            <div class="col-sm-3" style="float:left; font-weight:bold; margin-left:-40px; font-size:15px"> GDELT Event Labeling </div>
+            <div class="col-sm-2" style="float:right">Welcome,{{user.first_name}} | <a href="/tagging/logout/" class="navbar-link">Logout</a></div>
+            </div>
+        {% endif %}
+        
+        <div class="container">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">Labeling Guid</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            Check if the news article mentioning the encoded event list below. Each event will be reviewd by three judges, the final decision depends on the majority rule.  If the article do mention the event, click the button <span class="btn btn-success">Yes, it is correct</span>. Otherwise, choose <span class="btn btn-warning">No, it is wrong</span>. In case if you are not sure about the sample, click <span class="btn btn-primary">No decide Yet</span> and the event will be assigned to other judge.
+                            <br><span style="font-weight:bold; color:red">Tips</span>:
+                            <ul>
+                                <li>If the Event Type is right, but the Event Subtype is not clear, we still consider the event type is right.</li>
+                                <li>If the difference between Event Date and real date is less than 2 days, we still consider the event date is right.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% if not finished %}
+            <table class="table" style="table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th>Actor1</th>
+                        <th>Actor2</th>
+                        <th>Event Type</th>
+                        <th>Event Subtype</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody style="height: 60px; max-height:60px">
+                    <td id="actor1">{{actor1}}</td>
+                    <td id="actor2">{{actor2}}</td>
+                    <td id="event_type">{{eventType}}</td>
+                    <td id="event_subtype">{{subType}}</td>
+                    <td id="event_date">{{date}}</td>
+                    <td id="loc_name">{{location}}</td>
+                </tbody>
+            </table>
+
+            <div id="article" class="panel panel-default">
+                <div id="title" class="panel-heading"><h4>{{title}}</h4></div>
+                <div id="content" class="panel-body" style="height: 350px; max-height: 350px;overflow-y: scroll;">
+                    {% for p in ps%}
+                        <p>{% autoescape off %}{{p}}{% endautoescape off %}</p>
+                    {% endfor %}
+                </div>
+                <div class="panel-footer row">
+                    <div class="col-sm-8">
+                    <button id="correct" type="button" class="btn btn-success" style="margin-left: 5px;" value="1">Yes, it is correct.</button>
+                    <button id="wrong" type="button" class="btn btn-warning" style="margin-left: 20px;" value="2">No, it is wrong.</button>
+                    <button id="unknow" type="button" class="btn btn-primary" style="margin-left: 20px;" value="0">Not Decide Yet.</button>
+                    <button id="success" type="button" class="btn btn-success" style="margin-left: 20px; display:none" value="0"><span class="glyphicon glyphicon-ok"></span> Success</button>
+                    <input id="instance_id" type="hidden" value="{{instanceId}}">
+                    </div>
+                    <div id="summary" class="col-sm-4 text-info" style=" float:right; margin-top:10px; font-weight:bold; font-size:13px">You have Labeled  [<span id="u_count">{{user_label_count}}</span>]  Instances, [<span id="t_count">{{remaind_count}}</span>]  Remained.</div>
+                </div>
+            </div>
+        {% else %}
+            {% if remined_count == 0 %}
+                <div id="summary" class="col-sm-12 text-info" style="; font-weight:bold">Task Completed. You have Labeled  [<span id="u_count">{{user_label_count}}</span>]  Events, <p> [<span id="t_count">{{remaind_count}}</span>]  Remained.</div>
+            {% else %}
+                <div id="summary" class="col-sm-12 text-info" style="; font-weight:bold">Thanks, there are no new events for you to label. You have Labeled  [<span id="u_count">{{user_label_count}}</span>]  Events, <p> [<span id="t_count">{{remaind_count}}</span>]  Remained.</div>
+            {% endif %}
+        {% endif %}
+        </div>
+   
+</body>
+</html>

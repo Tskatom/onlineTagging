@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+  <head>
+    <title>Event Tagging</title>
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "tagging/css/style.css" %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"> </script>
+    <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+    <script src="{% static "tagging/js/register.js" %}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myModal").modal(
+              {backdrop : "static",
+              keyboard: false}
+            );
+        });
+    </script>
+  </head>
+  <body style="background-image: url({% static 'tagging/images/g2.jpg'%})">>
+    <div class="container" >
+         <div class="modal fade" id="myModal" role="dialog" style="background-image: url({% static 'tagging/images/g2.jpg'%})">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a onclick="showLogin();">Login</a></li>
+                  <li><a onclick="showReg();">Register</a></li>
+                </ul>
+
+                <div id="login_modal" class="modal-body" style="padding:40px 50px;">
+                  <form role="form" method="post" action="/tagging/login/">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="username"><span class="glyphicon glyphicon-user"></span> Username</label>
+                      <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username" required autofocus>
+                    </div>
+                    <div class="form-group">
+                      <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                      <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" required>
+                    </div>
+
+                      {% if login_error_msg %}
+                          <div class="text-warning" style="margin-bottom:20px"> {{login_error_msg}} </div>
+                      {% endif %}
+
+                      <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                      
+                  </form>
+                </div>
+
+                <div id="reg_modal" class="modal-body" style="padding:40px 50px; display:none">
+                      
+                      <form id="register-form" role="form" method="post" action="/tagging/register/" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="form-group">
+                          <input type="text" class="form-control" name="reg_username" id="reg_username" placeholder="Enter Username" required autofocus>
+                          <div id="reg_user_status" style="font-weight:Bold;"></div>
+                          </div>
+
+                          <div class="form-group">
+                          <label for="reg_password" class="sr-only">Password</label>
+                          <input type="password" class="form-control" id="reg_password" name="reg_password" placeholder="password">
+                        </div>
+                        <div class="form-group">
+                          <label for="reg_password_confirm" class="sr-only">Password Confirm</label>
+                          <input type="password" class="form-control" id="reg_password_confirm" name="reg_password_confirm" placeholder="confirm password">
+                        </div>
+
+                          <div class="form-group">
+                          <input type="text" class="form-control" name="reg_email" id="reg_email" placeholder="Enter Email" required autofocus>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-sm-6 form-group">
+                              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name">
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name">
+                            </div>
+                          </div>
+
+                          <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Register</button>
+                      </form>
+
+                </div>
+
+              </div>
+              
+            </div>
+          </div> 
+
+    </div>
+   
+</body>
+</html>
