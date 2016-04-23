@@ -21,6 +21,8 @@ def import_data(data_file, db_file):
             title = event["title"]
             content = event['eventText']
             date = event["DATEADDED"]
+            if not date or date.strip() == "":
+                continue
             location = event["ActionGeo_FullName"]
             actor1 = event["Actor1Name"]
             actor2 = event["Actor2Name"]
@@ -54,7 +56,9 @@ def import_task_instances(db_file):
 def main():
     data_file = sys.argv[1]
     db_file = sys.argv[2]
+    
     import_data(data_file, db_file)
+    import_task_instances(db_file)
 
 if __name__ == "__main__":
     main()

@@ -58,7 +58,7 @@
                         <th>Location</th>
                     </tr>
                 </thead>
-                <tbody style="height: 60px; max-height:60px">
+                <tbody style="height: 80px; max-height:80px">
                     <td id="actor1">{{actor1}}</td>
                     <td id="actor2">{{actor2}}</td>
                     <td id="event_type">{{eventType}}</td>
@@ -87,7 +87,7 @@
                 </div>
             </div>
         {% else %}
-            {% if remined_count == 0 %}
+            {% if remined_count <= 0 %}
                 <div id="summary" class="col-sm-12 text-info" style="; font-weight:bold">Task Completed. You have Labeled  [<span id="u_count">{{user_label_count}}</span>]  Events, <p> [<span id="t_count">{{remaind_count}}</span>]  Remained.</div>
             {% else %}
                 <div id="summary" class="col-sm-12 text-info" style="; font-weight:bold">Thanks, there are no new events for you to label. You have Labeled  [<span id="u_count">{{user_label_count}}</span>]  Events, <p> [<span id="t_count">{{remaind_count}}</span>]  Remained.</div>
