@@ -78,6 +78,7 @@ def user_register(request):
 def get_random_instance(request):
     text2code = cameo.text2code
     code2text = {v:k for k,v in text2code.items()}
+    code2root = cameo.root2code
 
     user_id = request.user.id
     # find the labeled events
@@ -106,7 +107,7 @@ def get_random_instance(request):
         record_content = re.sub(loc_it, "<mark>%s</mark>" % loc_it, record_content)
 
     paragraphs = re.split(r"\n+", record_content)
-    eventType = code2text.get(record.event_type, record.event_type)
+    eventType = code2root.get(record.event_type, record.event_type)
     subType = code2text.get(record.event_subtype, eventType)
     eventId = record.event_id
 
