@@ -5,7 +5,7 @@ import re
 import json
 import cameo
 from django.http import JsonResponse
-import datetime as dt
+from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -37,7 +37,7 @@ def label(request):
 
             # write label log
             tagLog = Labellog(instance_id=label_instance_id, event_id=instance.event_id, 
-                user_id=request.user.id, datetime=dt.datetime.now(), flag=flag)
+                user_id=request.user.id, datetime=timezone.now(), flag=flag)
             tagLog.save()
 
     # return another random records
