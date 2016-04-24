@@ -25,7 +25,7 @@
             </div>
         {% endif %}
         
-        <div class="container">
+        <div class="container" style="font-family:'Lucida Console'" >
             <div class="panel-group">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -39,7 +39,7 @@
                             <br><span style="font-weight:bold; color:red">Tips</span>:
                             <ul>
                                 <li>If the Event Type is right, but the Event Subtype is not clear, we still consider the event type is right.</li>
-                                <li>If the difference between Event Date and real date is less than 2 days, we still consider the event date is right.</li>
+                                <li>If we can't infer the absolute date(year/month/day) from article, we assume the encoded date filed is right. For instance, since we can't get the publish date of the news article, we are not able infer the exact date from the relative time term such as <span style="font-weight:bold">Monday</span>, <span style="font-weight:bold">this afternoon</span>.</li>
                             </ul>
                         </div>
                     </div>
@@ -47,7 +47,8 @@
             </div>
 
         {% if not finished %}
-            <table class="table" style="table-layout: fixed;">
+            <table class="table table-bordered" style="table-layout: fixed;">
+                <caption style="font-weight:bold;">GDELT Event </caption>
                 <thead>
                     <tr>
                         <th>Actor1</th>
@@ -68,6 +69,7 @@
                 </tbody>
             </table>
 
+            <div style="font-weight:bold; color:gray; font-size:16px">Article</div>
             <div id="article" class="panel panel-default">
                 <div id="title" class="panel-heading"><h4>{{title}}</h4></div>
                 <div id="content" class="panel-body" style="height: 350px; max-height: 350px;overflow-y: scroll;">
