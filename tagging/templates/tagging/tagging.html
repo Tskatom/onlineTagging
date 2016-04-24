@@ -19,11 +19,11 @@
         <div class="container" style="font-family:'Lucida Console'" >
 
             {% if user.is_authenticated%}
-            <div id="login_info" class="navbar well row" style="width:100%; max-height:60px; margin-top:10px; margin-left:2px"> 
+            <div id="login_info" class="navbar well row" style="width:100%; max-height:60px; margin-top:10px; margin-left:2px;"> 
             <div class="col-sm-1" style="max-height:60px; margin-top:-20px; margin-left:-25px">
             <img src="{%static 'tagging/images/power.svg'%}" class="img-rounded" width="60" height="60" style="float:left; margin-bottom:100px;">
             </div>
-            <div class="col-sm-3" style="float:left; font-weight:bold; font-size:15px"> GDELT Event Labeling </div>
+            <div class="col-sm-3" style="float:left; font-weight:bold; font-size:17px"> GDELT Event Labeling </div>
             <div class="col-sm-2" style="float:right">Welcome,{{user.first_name}} | <a href="/tagging/logout/" class="navbar-link">Logout</a></div>
             </div>
             {% endif %}
@@ -31,7 +31,7 @@
             <div class="panel-group">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title">
+                        <h4 class="panel-title" style="font-size: 16px">
                         <a data-toggle="collapse" href="#collapse1">Labeling Guide</a>
                         </h4>
                     </div>
@@ -49,7 +49,7 @@
             </div>
 
         {% if not finished %}
-            <table class="table table-bordered" style="table-layout: fixed;">
+            <table class="table table-bordered" style="table-layout: fixed; font-size:16px">
                 <caption style="font-weight:bold;">GDELT Event </caption>
                 <thead>
                     <tr>
@@ -76,7 +76,7 @@
             <div style="font-weight:bold; color:gray; font-size:16px">Article</div>
             <div id="article" class="panel panel-default">
                 <div id="title" class="panel-heading"><h4>{{title}}</h4></div>
-                <div id="content" class="panel-body" style="height: 350px; max-height: 350px;overflow-y: scroll;">
+                <div id="content" class="panel-body" style="font-size:16px; height: 350px; max-height: 350px;overflow-y: scroll;">
                     {% for p in ps%}
                         <p>{% autoescape off %}{{p}}{% endautoescape off %}</p>
                     {% endfor %}
