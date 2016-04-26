@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+import nltk
 
 # Create your views here.
 @login_required
@@ -98,22 +99,44 @@ def get_random_instance(request):
     choosen_instance = random.choice(instances)
 
     record = Records.objects.get(event_id=choosen_instance.event_id)
+
+    # hightlight the sentences containing the location in event
     location = record.location.strip()
     loc_items = []
     if location and location != "":
         loc_items = location.split(",")
 
     record_content = record.content
-    for loc_it in loc_items:
-        record_content = re.sub(loc_it, "<mark>%s</mark>" % loc_it, record_content)
 
-    paragraphs = re.split(r"\n+", record_content)
+    temp_paragrahs = re.split(r"\n+", record_content)
+    paragraphs = []
+    for para in temp_paragrahs:
+        sentences = nltk.sent_tokenize(para)
+        temp_sens = []
+        for sen in sentences:
+            if len(loc_items) > 0:
+                rule = "|".join(["(%s)" % loc for loc in loc_items])
+                if re.search(rule, sen):
+                    temp_sens.append("<mark>%s</mark>" % sen)
+                else:
+                    temp_sens.append(sen)
+            else:
+                temp_sens.append(sen)
+        temp_para = " ".join(temp_sens)
+        paragraphs.append(temp_para)
+
     eventType = code2root.get(record.event_type, record.event_type)
     subType = code2text.get(record.event_subtype, eventType)
     eventId = record.event_id
 
+    cameo2desc = cameo.cameo2desc
+    subTypeDesc = cameo2desc.get(record.event_subtype, subType)
+    eventTypeDesc = cameo2desc.get(record.event_type + "0")
+
     event = {"finished":False,"eventId": eventId, "instanceId": choosen_instance.instance_id, "location": record.location, "eventType": eventType,
-    "ps": paragraphs, "subType": subType, "actor1": record.actor1, "actor2": record.actor2, "date":record.event_date, "title": record.title}
+    "ps": paragraphs, "subType": subType, "actor1": record.actor1, "actor2": record.actor2, "date":record.event_date, "title": record.title, 
+    "typeName": eventTypeDesc["Name"], "typeDesc":eventTypeDesc["Description"], "typeNote": eventTypeDesc["Usage Notes"], "typeExp": eventTypeDesc["Example"],
+    "subTypeName": subTypeDesc["Name"], "subTypeDesc":subTypeDesc["Description"], "subTypeNote":subTypeDesc["Usage Notes"], "subTypeExp":subTypeDesc["Example"]}
     return event
 
 def user_login(request):

@@ -16,7 +16,7 @@
   <body>
         
         
-        <div class="container" style="font-family:'Lucida Console'" >
+        <div class="container" style="font-family:'Lucida Console';" >
 
             {% if user.is_authenticated%}
             <div id="login_info" class="navbar well row" style="width:100%; max-height:60px; margin-top:10px; margin-left:2px;"> 
@@ -37,10 +37,13 @@
                     </div>
                     <div id="collapse1" class="panel-collapse collapse">
                         <div class="panel-body">
-                            Check if the news article mentioning the encoded event list below. Each event will be reviewd by three judges, the final decision depends on the majority rule.  If the article do mention the event, click the button <span class="btn btn-success">Yes, it is correct</span>. Otherwise, choose <span class="btn btn-warning">No, it is wrong</span>. In case if you are not sure about the sample, click <span class="btn btn-primary">No decide Yet</span> and the event will be assigned to other judge.
+                            Check if the news article mentioning the encoded event list below. 
+                            Each event will be reviewd by three judges, the final decision depends on the majority rule.  If the article do mention the event, click the button <span class="btn btn-success">Yes, it is correct</span>. Otherwise, choose <span class="btn btn-warning">No, it is wrong</span>. In case if you are not sure about the sample, click <span class="btn btn-primary">No decide Yet</span> and the event will be assigned to other judge.
                             <br><span style="font-weight:bold; color:red">Tips</span>:
                             <ul>
-                                <li><a href="{%static 'tagging/files/cameo_codebook.pdf'%}" target="_blank">CAMEO codebook</a> contains the description and example for each event type.</li>
+                                <li>Move mouse on top of event type/event subtype, the system will show descrition and examples of the type.</li>
+                                <li><a href="{%static 'tagging/files/cameo_codebook.pdf'%}" target="_blank">CAMEO codebook</a> contains the full description and example for each event type.</li>
+                                <li>The sentences which contain the event location terms are being highlighted.</li>
                                 <li>If the Event Type is right, but the Event Subtype is not clear, we still consider the event type is right.</li>
                                 <li>If we can't infer the absolute date(year/month/day) from article, we assume the encoded date filed is right. For instance, since we can't get the publish date of the news article, we are not able infer the exact date from the relative time term such as <span style="font-weight:bold">Monday</span>, <span style="font-weight:bold">this afternoon</span>.</li>
                             </ul>
@@ -63,17 +66,67 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="height: 70px; max-height:70px">
+                    <tr style="height: 70px; max-height:70px; font-size:15px">
                     <td id="actor1">{{actor1}}</td>
                     <td id="actor2">{{actor2}}</td>
-                    <td id="event_type">{{eventType}}</td>
-                    <td id="event_subtype">{{subType}}</td>
+                    <td id="event_type" class="btn-link">{{eventType}}</td>
+                    <td id="event_subtype" class="btn-link">{{subType}}</td>
                     <td id="event_date">{{date}}</td>
                     <td id="loc_name">{{location}}</td>
                     </tr>
                 </tbody>
             </table>
+            <div id="event_type_container"></div>
+            <div id="event_type_tip" style="display:none">
+                <table class="table">
+                      <tbody>
+                        <tr>
+                          <th scope="row">Name:</th>
+                          <td id="typeName">{{typeName}}</td>
+                        </tr>
 
+                        <tr>
+                          <th scope="row">Description:</th>
+                          <td id="typeDesc">{{typeDesc}}</td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">Usage Notes</th>
+                          <td id="typeNote">{{typeNote}}</td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">Example</th>
+                          <td id="typeExp">{{typeExp}}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+            </div>
+            <div id="event_subtype_tip" style="display:none">  
+                <table class="table">
+                      <tbody>
+                        <tr>
+                          <th scope="row">Name:</th>
+                          <td id="subTypeName">{{subTypeName}}</td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">Description:</th>
+                          <td id="subTypeDesc">{{subTypeDesc}}</td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">Usage Notes</th>
+                          <td id="subTypeNote">{{subTypeNote}}</td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row">Example</th>
+                          <td id="subTypeExp">{{subTypeExp}}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+            </div>
             <div style="font-weight:bold; color:gray; font-size:16px">Article</div>
             <div id="article" class="panel panel-default">
                 <div id="title" class="panel-heading"><h4>{{title}}</h4></div>

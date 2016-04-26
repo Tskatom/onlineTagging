@@ -28,6 +28,9 @@ $(document).ready(function(){
             update_page(data);
         });
     });
+
+    $("#event_type").tooltip({html:true, placement:"left", title:$("#event_type_tip").html(), container:"#event_type_container"});
+    $("#event_subtype").tooltip({html:true, placement:"right", title:$("#event_subtype_tip").html(), container:"#event_type_container"});
 });
 
 function update_page(data){
@@ -74,5 +77,15 @@ function update_page(data){
         $("#instance_id").val(instanceId);
         $("#u_count").html(user_label_count);
         $("#t_count").html(remaind_count);
+       
+        $("#typeName").html([data.typeName]);
+        $("#typeDesc").html([data.typeDesc]);
+        $("#typeNote").html([data.typeNote]);
+        $("#typeExp").html([data.typeExp]);
+
+        $("#subTypeName").html([data.subTypeName]);
+        $("#subTypeDesc").html([data.subTypeDesc]);
+        $("#subTypeNote").html([data.subTypeNote]);
+        $("#subTypeExp").html([data.subTypeExp]);
     }
 }
