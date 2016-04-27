@@ -46,6 +46,7 @@
                                 <li>The sentences which contain the event location terms are being highlighted.</li>
                                 <li>If the Event Type is right, but the Event Subtype is not clear, we still consider the event type is right.</li>
                                 <li>If we can't infer the absolute date(year/month/day) from article, we assume the encoded date filed is right. For instance, since we can't get the publish date of the news article, we are not able infer the exact date from the relative time term such as <span style="font-weight:bold">Monday</span>, <span style="font-weight:bold">this afternoon</span>.</li>
+                                <li><span class="text-danger" style="font-weight:bold">Igore the fields Actor1 and Actor2</span>, these two fields are only used to help checking if the article mentions the correct event type or not. So if the article mentions a correct case of the encoded event type, we can label the event as correct regardless of the Actor1/Actor2 fields.</li>
                             </ul>
                         </div>
                     </div>
