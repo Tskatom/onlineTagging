@@ -78,14 +78,15 @@ function update_page(data){
         $("#u_count").html(user_label_count);
         $("#t_count").html(remaind_count);
        
-        $("#typeName").html([data.typeName]);
-        $("#typeDesc").html([data.typeDesc]);
-        $("#typeNote").html([data.typeNote]);
-        $("#typeExp").html([data.typeExp]);
+        $("#typeName").html(data.typeName);
+        $("#typeDesc").html(data.typeDesc);
+        $("#typeNote").html(data.typeNote);
+        $("#typeExp").html(data.typeExp];
 
-        $("#subTypeName").html([data.subTypeName]);
-        $("#subTypeDesc").html([data.subTypeDesc]);
-        $("#subTypeNote").html([data.subTypeNote]);
-        $("#subTypeExp").html([data.subTypeExp]);
+
+        $("#subTypeName").html(data.subTypeName);
+        $("#subTypeDesc").html(data.subTypeDesc);
+        $("#subTypeNote").html(data.subTypeNote);
+        $("#subTypeExp").html(data.subTypeExp);
     }
 }
