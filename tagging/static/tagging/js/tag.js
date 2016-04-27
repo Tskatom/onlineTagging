@@ -81,7 +81,7 @@ function update_page(data){
         $("#typeName").html(data.typeName);
         $("#typeDesc").html(data.typeDesc);
         $("#typeNote").html(data.typeNote);
-        $("#typeExp").html(data.typeExp];
+        $("#typeExp").html(data.typeExp);
 
 
         $("#subTypeName").html(data.subTypeName);
