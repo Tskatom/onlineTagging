@@ -96,7 +96,8 @@ def get_random_instance(request):
         return {"finished": True}
     # randomly choose a instance
     #random.shuffle(instances)
-    choosen_instance = random.choice(instances)
+    cid = random.randint(0, len(instances))
+    choosen_instance = instances[cid]
 
     record = Records.objects.get(event_id=choosen_instance.event_id)
 
