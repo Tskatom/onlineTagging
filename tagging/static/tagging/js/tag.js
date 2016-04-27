@@ -55,8 +55,8 @@ function update_page(data){
 
         $("#actor1").html(actor1);
         $("#actor2").html(actor2);
-        $("#eventType").html(eventType);
-        $("#subType").html(subType);
+        $("#event_type").html(eventType);
+        $("#event_subtype").html(subType);
         $("#title").html('<h4>' + title + '</h4>');
 
         var text = '';
