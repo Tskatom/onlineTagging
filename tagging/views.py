@@ -95,7 +95,7 @@ def get_random_instance(request):
     if len(instances) == 0:
         return {"finished": True}
     # randomly choose a instance
-    random.shuffle(instances)
+    #random.shuffle(instances)
     choosen_instance = random.choice(instances)
 
     record = Records.objects.get(event_id=choosen_instance.event_id)
@@ -104,7 +104,7 @@ def get_random_instance(request):
     location = record.location.strip()
     loc_items = []
     if location and location != "":
-        loc_items = location.split(",")
+        loc_items = [loc for loc in location.split(",") if loc.strip() != ""]
 
     record_content = record.content
 
