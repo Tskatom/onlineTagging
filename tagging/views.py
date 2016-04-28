@@ -85,7 +85,7 @@ def get_random_instance(request):
     # find the labeled events
     labeled_events = {}
     for elog in Labellog.objects.filter(user_id=user_id):
-        labeled_events[elog.event_id] = 1
+        labeled_events[elog.event_id] = elog.datetime
 
     # find the available instances
     instances = []
@@ -94,10 +94,32 @@ def get_random_instance(request):
             instances.append(ins)
     if len(instances) == 0:
         return {"finished": True}
-    # randomly choose a instance
-    #random.shuffle(instances)
-    cid = random.randint(0, len(instances))
-    choosen_instance = instances[cid]
+
+    # group instance by event type
+    events = {}
+    for event in Records.objects.all():
+        events[event.event_id] = event.event_type
+    group_instances = {}
+    for instance in instances:
+        instance_type = events[instance.event_id]
+        if instance_type not in group_instances:
+            group_instances[instance_type] = []
+        group_instances[instance_type].append(instance)
+
+    # randomly choose one instance from that category
+    if len(labeled_events) == 0:
+        target_category = random.choice(group_instances.keys())
+    else:
+        # choose from last label category
+        last_event_id = sorted(labeled_events.items(), key=lambda x:x[1])[-1][0]
+        last_event_type = Records.objects.get(event_id=last_event_id).event_type
+        if last_event_type not in group_instances:
+            target_category = random.choice(group_instances.keys())
+        else:
+            target_category = last_event_type
+
+    choosen_instance = random.choice(group_instances[target_category])
+   
 
     record = Records.objects.get(event_id=choosen_instance.event_id)
 
