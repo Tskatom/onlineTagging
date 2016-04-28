@@ -148,8 +148,8 @@ def get_random_instance(request):
         temp_para = " ".join(temp_sens)
         paragraphs.append(temp_para)
 
-    eventType = code2root.get(record.event_type, record.event_type)
-    subType = code2text.get(record.event_subtype, eventType)
+    eventType = code2root.get(record.event_type, record.event_type) + " (%s)" % record.event_type
+    subType = code2text.get(record.event_subtype, eventType) + " (%s)" % record.event_subtype
     eventId = record.event_id
 
     cameo2desc = cameo.cameo2desc
